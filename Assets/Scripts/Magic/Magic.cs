@@ -10,22 +10,22 @@ public abstract class Magic : Item
     [SerializeField] protected Sprite _shellSprite;
     [SerializeField] protected AnimatorController _animator;
     [Header("Game")]
-    [SerializeField] protected Shell _shell;
     [SerializeField] protected int _damage;
     [SerializeField] protected float _speed;
+    [SerializeField] protected float _delayBetweenShots;
 
-    public bool IsBought { get; protected set; }
+    protected float _lastShotTime;
 
-    public abstract void Attack(Transform position);
+    public AnimatorController Animator => _animator;
+    public int Damage => _damage;
+    public float DelayBetweenShots => _delayBetweenShots;
 
-    public override bool CanSell()
+    public virtual void Init()
     {
-        return IsBought == false;
+        _lastShotTime = 0;
     }
 
-    public override void Sell()
-    {
-        if (CanSell())
-            IsBought = true;
-    }
+    public abstract void Exit();
+
+    public abstract bool TryAttack(Transform attackPoint);
 }

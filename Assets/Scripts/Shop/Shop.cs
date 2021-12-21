@@ -10,38 +10,57 @@ public class Shop : MonoBehaviour
     [SerializeField] private ItemCard _template;
     [SerializeField] private List<Magic> _availableMagic;
 
-    private void Start()
+    private List<ItemCard> _cards;
+
+    private void Awake()
     {
+        _cards = new List<ItemCard>();
+
         foreach (var item in _availableMagic)
         {
-            AddItem<Magic>(item);
+            AddItem(item);
         }
     }
 
-    private void AddItem<T>(Item item)
+    private void OnEnable()
+    {
+        Time.timeScale = 0;
+
+        foreach (var card in _cards)
+        {
+            if (card.Item is Magic magic)
+                card.UpdateState(_player.CanBuy(magic));
+
+            card.Selling += OnSellingStart;
+        }
+    }
+
+    private void OnDisable()
+    {
+        Time.timeScale = 1;
+
+        foreach (var card in _cards)
+            card.Selling -= OnSellingStart;
+    }
+
+    private void AddItem(Item item)
     {
         var card = Instantiate(_template, _container);
         card.Render(item);
-        card.Selling += OnSellingStart;
+        _cards.Add(card);
     }
 
     private void OnSellingStart(Item item, ItemCard card)
     {
-        if (TrySell(item))
-        {
-            card.Selling -= OnSellingStart;
-            card.Render(item);
-        }
+        TrySell(item, card);
     }
 
-    private bool TrySell(Item item)
+    private bool TrySell(Item item, ItemCard card)
     {
-        if (item.CanSell() && _player.CanBuy(item))
+        if (item is Magic magic && _player.CanBuy(magic))
         {
-            item.Sell();
-            
-            if (item is Magic)
-                _player.Buy((Magic)item);
+            _player.Buy(magic);
+            card.UpdateState(false);
 
             return true;
         }

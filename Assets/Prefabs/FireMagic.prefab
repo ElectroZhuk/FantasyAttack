@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9020613848120271848}
-  - component: {fileID: 172449024410758844}
+  - component: {fileID: 2721224059101832508}
   m_Layer: 0
   m_Name: FireMagic
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &172449024410758844
+--- !u!114 &2721224059101832508
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,14 +40,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 2183873708002215276}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 003b88d38e76c3b4d814d7e5dca8ef02, type: 3}
+  m_Script: {fileID: 11500000, guid: b848001f34d22f94e8c32680761e8b8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _icon: {fileID: 21300000, guid: 82609722a2ca2d44bb3e3c8110528d8e, type: 3}
-  _price: 5
+  _price: 4
   _name: "\u041C\u0430\u0433\u0438\u044F \u043E\u0433\u043D\u044F"
   _shellSprite: {fileID: 21300000, guid: fc23bf91a11d37848a21377eff832150, type: 3}
-  _animator: {fileID: 0}
-  _shell: {fileID: 2040330337528996619, guid: e3f70120cd029184d9f87f7ebddef86c, type: 3}
+  _animator: {fileID: 9100000, guid: 827b6ce9aca8aed488d3e526eda9418c, type: 2}
   _damage: 2
   _speed: 5
+  _delayBetweenShots: 1
+  _isBought: 0
+  _shell: {fileID: 3361326059724755942, guid: 17ad44f4300f0a24d82432f84a6e190d, type: 3}
+  _minControlPositionX: 5.12
+  _maxControlPositionX: -1.36
+  _minShootPositionX: 2.82
+  _maxShootPositionX: -6.21
+  _groundPositionY: -4.024
+  _scopeTemplate: {fileID: -1564898924613489439, guid: d902f1e4a2b24ff4e883f82e72d96d0e, type: 3}

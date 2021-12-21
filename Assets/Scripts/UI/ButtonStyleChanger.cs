@@ -21,6 +21,8 @@ public class ButtonStyleChanger : MonoBehaviour
     private void Start()
     {
         _lastState = _button.interactable;
+        SetSprite(_button.interactable);
+        ChangeTextStyle(_button.interactable);
     }
 
     private void Update()

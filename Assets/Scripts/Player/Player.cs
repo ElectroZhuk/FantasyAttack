@@ -6,14 +6,16 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour
 {
     [SerializeField] private int _maxHealth;
-    [SerializeField] private List<Magic> _magic;
+    [SerializeField] private List<Magic> _availableMagic;
     [SerializeField] private Transform _attackPosition;
+    [SerializeField] private Animator _animator;
 
     private int _health;
     private int _money;
     private Magic _currentMagic;
     private bool _canAttack;
     private bool _isInvincible;
+    private Vector2 _mousePosition;
     
     public int Health => _health;
     public int Money => _money;
@@ -23,20 +25,18 @@ public class Player : MonoBehaviour
     public event UnityAction Hitted;
     public event UnityAction Dead;
     public event UnityAction<int> MoneyChanged;
+    public event UnityAction<int> DamageChanged;
+    public event UnityAction<Magic> MagicChanged;
 
     private void Start()
     {
         _health = _maxHealth;
         HealthChanged?.Invoke(_health * 1f / _maxHealth);
         MoneyChanged?.Invoke(_money);
-        _currentMagic = _magic[0];
+        ChangeMagic(1);
         _canAttack = true;
         _isInvincible = false;
-
-        foreach (var magic in _magic)
-        {
-            magic.Sell();
-        }
+        _mousePosition = Input.mousePosition;
     }
 
     private void Update()
@@ -45,9 +45,36 @@ public class Player : MonoBehaviour
         {
             if (_canAttack)
             {
-                _currentMagic.Attack(_attackPosition);
-                Attacking?.Invoke();
+                if (_currentMagic.TryAttack(_attackPosition))
+                    Attacking?.Invoke();
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            ChangeMagic(1);
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+            ChangeMagic(2);
+        
+        if (_currentMagic is FireMagic fire && (Vector2)Input.mousePosition != _mousePosition)
+        {
+            _mousePosition = Input.mousePosition;
+            var worldPosition = Camera.main.ScreenToWorldPoint(_mousePosition);
+            fire.MousePositionChanged(worldPosition);
+        }
+    }
+
+    private void ChangeMagic(int magicNumber)
+    {
+        if (magicNumber <= _availableMagic.Count && magicNumber - 1 != _availableMagic.IndexOf(_currentMagic))
+        {
+            if (_currentMagic != null)
+                _currentMagic.Exit();
+
+            _currentMagic = _availableMagic[magicNumber - 1];
+            _animator.runtimeAnimatorController = _currentMagic.Animator;
+            _currentMagic.Init();
+            MagicChanged?.Invoke(_currentMagic);
+            DamageChanged?.Invoke(_currentMagic.Damage);
         }
     }
 
@@ -57,29 +84,33 @@ public class Player : MonoBehaviour
         MoneyChanged?.Invoke(_money);
     }
 
-    public bool CanBuy(Item item)
+    public bool CanBuy(Magic magic)
     {
-        return item.Price <= _money;
+        return magic.Price <= _money && _availableMagic.Contains(magic) == false;
     }
 
     public void Buy(Magic magic)
     {
         if (CanBuy(magic))
         {
-            _magic.Add(magic);
+            _availableMagic.Add(magic);
             _money -= magic.Price;
+            MoneyChanged?.Invoke(_money);
         }
     }
     public void TakeDamage(int damage)
     {
-        _health -= damage;
-        Hitted?.Invoke();
-        HealthChanged?.Invoke(_health * 1f / _maxHealth);
-
-        if (_health <= 0)
+        if (_isInvincible == false)
         {
-            _health = 0;
-            Die();
+            _health -= damage;
+            Hitted?.Invoke();
+            HealthChanged?.Invoke(_health * 1f / _maxHealth);
+
+            if (_health <= 0)
+            {
+                _health = 0;
+                Die();
+            }
         }
     }
 

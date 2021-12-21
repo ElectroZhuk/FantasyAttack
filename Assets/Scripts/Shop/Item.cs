@@ -12,8 +12,4 @@ public abstract class Item : MonoBehaviour
     public Sprite Icon => _icon;
     public int Price => _price;
     public string Name => _name;
-
-    public abstract bool CanSell();
-
-    public abstract void Sell();
 }

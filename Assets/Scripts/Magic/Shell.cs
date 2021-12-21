@@ -2,40 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(CircleCollider2D))]
 public class Shell : MonoBehaviour
 {
-    [SerializeField] private float _rotationSpeed;
+    [SerializeField] protected float _rotationSpeed;
 
-    private SpriteRenderer _spriteRenderer;
-    private float _speed;
-    private int _damage;
+    protected SpriteRenderer _spriteRenderer;
+    protected Collider2D _collider;
+    protected float _speed;
+    protected int _damage;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-    private void Update()
-    {
-        transform.Translate(Vector2.left * _speed * Time.deltaTime, Space.World);
-        transform.Rotate(Vector3.forward, _rotationSpeed * Time.deltaTime);
+        _collider = GetComponent<Collider2D>();
     }
 
-    public void Init(Sprite sprite, int damage, float speed)
+    public virtual void Init(Sprite sprite, int damage, float speed)
     {
         _spriteRenderer.sprite = sprite;
         _damage = damage;
         _speed = speed;
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.TryGetComponent<Enemy>(out Enemy enemy))
-        {
-            enemy.TakeDamage(_damage);
-        }
-
-        Destroy(gameObject);
-    }
-
 }

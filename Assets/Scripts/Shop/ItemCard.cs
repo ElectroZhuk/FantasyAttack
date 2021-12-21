@@ -12,21 +12,21 @@ public class ItemCard : MonoBehaviour
     [SerializeField] private Image _itemIcon;
     [SerializeField] private TMP_Text _name;
 
-    private Item _item;
+    public Item Item { get; private set; }
 
     public event UnityAction<Item, ItemCard> Selling;
 
     public void Render(Item item)
     {
-        _item = item;
+        Item = item;
         _buyButtonText.text = item.Price.ToString();
         _itemIcon.sprite = item.Icon;
         _name.text = item.Name;
+    }
 
-        if (item.CanSell() == false)
-        {
-            _buyButton.interactable = false;
-        }
+    public void UpdateState(bool isInteractable)
+    {
+        _buyButton.interactable = isInteractable;
     }
 
     private void OnEnable()
@@ -41,6 +41,6 @@ public class ItemCard : MonoBehaviour
 
     private void OnBuyButtonClicked()
     {
-        Selling?.Invoke(_item, this);
+        Selling?.Invoke(Item, this);
     }
 }
