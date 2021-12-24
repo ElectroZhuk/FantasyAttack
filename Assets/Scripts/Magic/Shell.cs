@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(CircleCollider2D), typeof(SpriteRenderer))]
 public class Shell : MonoBehaviour
 {
     [SerializeField] protected float _rotationSpeed;

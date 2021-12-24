@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class RunState : State
 {
-    [SerializeField] private float _speed;
+    private float _speed;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        StateEvent = Events.InvokeRunning;
+    }
 
     private void OnEnable()
     {
         Events.InvokeRunning(true);
+        //_speed = Enemy.Speed;
         //Animator.SetBool(EnemyAnimatorController.Params.Moving, true);
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         //if(Animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == EnemyAnimatorController.States.Walk)
-            transform.Translate(Vector2.right * _speed * Time.deltaTime, Space.World);
+            transform.Translate(Vector2.right * Enemy.Speed * Time.deltaTime, Space.World);
     }
 
     private void OnDisable()

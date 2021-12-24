@@ -132,9 +132,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5dc50229c5c567438cb95d4a9d4ba0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 5
+  _maxHealth: 1
   _damage: 1
   _reward: 1
+  _originalSpeed: 1.8
   _renderer: {fileID: 5351298770497033495}
   _timeToBury: 2
 --- !u!114 &-2005402892005981129
@@ -163,10 +164,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d2512c1421c4748bb27956827c4df6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transitions:
+  Abilities: []
+  Transitions:
   - {fileID: -6393981767800574305}
   - {fileID: 3868257436480936228}
-  _speed: 1.6
 --- !u!114 &-6393981767800574305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,7 +195,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b65b969caac2e945a56920cf89ceeaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transitions:
+  Abilities: []
+  Transitions:
   - {fileID: 3868257436480936228}
   _delay: 1
 --- !u!114 &3868257436480936228
@@ -222,7 +224,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56b920297fb8baa45bc24c550d66a3dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transitions: []
+  Abilities: []
+  Transitions: []
 --- !u!114 &-7674377090015506401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,7 +238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185372ca1c1e7a64489c0bbf06ef6a6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transitions:
+  Abilities: []
+  Transitions:
   - {fileID: 5656388201354833078}
 --- !u!114 &5656388201354833078
 MonoBehaviour:

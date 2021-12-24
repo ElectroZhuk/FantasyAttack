@@ -11,6 +11,7 @@ public class AttackState : State
     private void Start()
     {
         _lastAttackTime = _delay;
+        StateEvent = Events.InvokeAttacking;
     }
 
     private void OnEnable()
@@ -19,8 +20,9 @@ public class AttackState : State
         Events.InvokeAttacking(true);
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         _lastAttackTime += Time.deltaTime;
 
         if (_lastAttackTime >= _delay)

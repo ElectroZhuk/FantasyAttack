@@ -8280,14 +8280,20 @@ MonoBehaviour:
   - _units:
     - _enemy: {fileID: 981729468628604956, guid: cb7fb74ee7c698a49b9e5276aef08a15, type: 3}
       _count: 4
+    - _enemy: {fileID: 7268711108340839630, guid: f835cbaa69c99fa41910862ca942a6ce, type: 3}
+      _count: 1
     _delay: 1
   - _units:
     - _enemy: {fileID: 981729468628604956, guid: cb7fb74ee7c698a49b9e5276aef08a15, type: 3}
       _count: 7
+    - _enemy: {fileID: 7268711108340839630, guid: f835cbaa69c99fa41910862ca942a6ce, type: 3}
+      _count: 2
     _delay: 0.7
   - _units:
     - _enemy: {fileID: 981729468628604956, guid: cb7fb74ee7c698a49b9e5276aef08a15, type: 3}
       _count: 12
+    - _enemy: {fileID: 7268711108340839630, guid: f835cbaa69c99fa41910862ca942a6ce, type: 3}
+      _count: 3
     _delay: 0.7
   _spawnPoint: {fileID: 1513064600}
   _enemiesController: {fileID: 1513064601}
@@ -11015,12 +11021,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 892607064, guid: 0d039682b8a324b44b8d3920934155f5, type: 3}
       propertyPath: _availableMagic.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 892607064, guid: 0d039682b8a324b44b8d3920934155f5, type: 3}
       propertyPath: _availableMagic.Array.data[0]
       value: 
       objectReference: {fileID: 7897055024009531184, guid: c7ee4c00f65068044a9b505c7aa5f296, type: 3}
+    - target: {fileID: 892607064, guid: 0d039682b8a324b44b8d3920934155f5, type: 3}
+      propertyPath: _availableMagic.Array.data[1]
+      value: 
+      objectReference: {fileID: 2721224059101832508, guid: ae7d02a24a38ef44f9997d4e1aada87f, type: 3}
     - target: {fileID: 28343848669928888, guid: 0d039682b8a324b44b8d3920934155f5, type: 3}
       propertyPath: m_Name
       value: Player

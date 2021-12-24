@@ -8,14 +8,14 @@ public class Explosion : MonoBehaviour
     [SerializeField] private Animator _animator;
 
     private int _damage;
-    private List<Enemy> _damagedEnemy;
+    private List<Enemy> _damagedEnemies;
 
     public void Init(int damage, float radius)
     {
         _damage = damage;
         float ration = radius / (_renderer.sprite.bounds.extents.x);
         transform.localScale = new Vector3(transform.localScale.x * ration, transform.localScale.y * ration, transform.localScale.z);
-        _damagedEnemy = new List<Enemy>();
+        _damagedEnemies = new List<Enemy>();
         _animator.SetTrigger(ExplosionAnimatorController.Params.Explose);
         StartCoroutine(DestroyAfterAnimation());
     }
@@ -34,10 +34,10 @@ public class Explosion : MonoBehaviour
     {
         Enemy enemy;
 
-        if (collision.TryGetComponent<Enemy>(out enemy) && _damagedEnemy.Contains(enemy) == false)
+        if (collision.TryGetComponent<Enemy>(out enemy) && _damagedEnemies.Contains(enemy) == false)
         {
             enemy.TakeDamage(_damage);
-            _damagedEnemy.Add(enemy);
+            _damagedEnemies.Add(enemy);
         }
     }
 }

@@ -6,16 +6,16 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Animator))]
 public class EnemyAnimation : MonoBehaviour
 {
-    [SerializeField] private EnemyBaseEvents _events;
+    [SerializeField] protected EnemyBaseEvents _events;
 
-    private Animator _animator;
+    protected Animator _animator;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _animator = GetComponent<Animator>();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         _events.Running += OnRunning;
         _events.Attacking += OnAttacking;
@@ -23,7 +23,7 @@ public class EnemyAnimation : MonoBehaviour
         _events.Dead += OnDead;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         _events.Running -= OnRunning;
         _events.Attacking -= OnAttacking;

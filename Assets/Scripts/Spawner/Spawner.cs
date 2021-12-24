@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] private List<Wave> _waves;
     [SerializeField] private Transform _spawnPoint;
-    [SerializeField] private EnemiesController _enemiesController;
+    [SerializeField] private EnemiesCountController _enemiesController;
 
     private Wave _currentWave;
     private int _currentWaveIndex = 0;

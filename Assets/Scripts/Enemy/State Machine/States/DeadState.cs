@@ -13,6 +13,7 @@ public class DeadState : State
         base.Awake();
         _collider = GetComponent<Collider2D>();
         _renderer = GetComponent<SpriteRenderer>();
+        StateEvent = Events.InvokeDead;
     }
 
     private void OnEnable()

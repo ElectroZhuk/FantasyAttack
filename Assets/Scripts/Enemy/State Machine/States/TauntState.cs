@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class TauntState : State
 {
+    protected override void Awake()
+    {
+        base.Awake();
+        StateEvent = Events.InvokeTaunting;
+    }
+
     private void OnEnable()
     {
         //Animator.SetBool(EnemyAnimatorController.Params.Win, true);

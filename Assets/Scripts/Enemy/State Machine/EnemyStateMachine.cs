@@ -54,15 +54,15 @@ public class EnemyStateMachine : MonoBehaviour
 
     private void Reset(State startState)
     {
-        var states = GetComponents<State>();
-
-        foreach (var state in states)
-            state.enabled = false;
-
         var transitions = GetComponents<Transition>();
 
         foreach (var transition in transitions)
             transition.enabled = false;
+
+        var states = GetComponents<State>();
+
+        foreach (var state in states)
+            state.enabled = false;
 
         _currentState = startState;
 

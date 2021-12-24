@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.Events;
 
-public class EnemiesController : MonoBehaviour
+public class EnemiesCountController : MonoBehaviour
 {
     [SerializeField] Player _player;
 
@@ -39,7 +39,12 @@ public class EnemiesController : MonoBehaviour
         {
             var enemy = Instantiate(enemyToSpawn, new Vector3(point.position.x, point.position.y, point.position.z + 0.001f * CountAllEnemies()), Quaternion.identity, point).GetComponent<Enemy>();
             enemy.name += CountAllEnemies().ToString();
-            enemy.Init(_player);
+
+            if (enemy is Ogre ogre)
+                ogre.Init(_player, this);
+            else
+                enemy.Init(_player);
+
             enemy.Dead += OnEnemyDead;
             _aliveEnemies.Add(enemy);
         }
@@ -48,6 +53,34 @@ public class EnemiesController : MonoBehaviour
     private int CountAllEnemies()
     {
         return _enemyPull.Count + _aliveEnemies.Count + _deadEnemies.Count;
+    }
+
+    public int CountSpawnedEnemies()
+    {
+        return _aliveEnemies.Count + _deadEnemies.Count;
+    }
+
+    public int CountSpawnedEnemies<T>()
+    {
+        int alive = _aliveEnemies.Select(enemy => enemy).Where(enemy => enemy is T).Count();
+        int dead = _deadEnemies.Select(enemy => enemy).Where(enemy => enemy is T).Count();
+
+        return dead + alive;
+    }
+
+    public int CountAliveEnemies()
+    {
+        return _aliveEnemies.Count;
+    }
+
+    public int CountAliveEnemies<T>()
+    {
+        return _aliveEnemies.Select(enemy => enemy).Where(enemy => enemy is T).Count();
+    }
+
+    public int CountDeadEnemies()
+    {
+        return _deadEnemies.Count;
     }
 
     public void BuryDeadEnemies()
@@ -80,5 +113,17 @@ public class EnemiesController : MonoBehaviour
             _deadEnemies.Remove(buriedEnemy);
             _enemyPull.Add(buriedEnemy);
         }
+    }
+
+    public Enemy GetNearesAliveEnemy(Enemy fromEnemy, bool isTargeted = false)
+    {
+        Enemy nearestEnemy = null;
+
+        foreach (var enemy in _aliveEnemies)
+        {
+            if (enemy.GetType() != fromEnemy.GetType() && enemy.IsTargeted == isTargeted && (nearestEnemy == null || Vector2.Distance(enemy.transform.position, fromEnemy.transform.position) < Vector2.Distance(nearestEnemy.transform.position, fromEnemy.transform.position)))
+                nearestEnemy = enemy;
+        }
+        return nearestEnemy;
     }
 }
